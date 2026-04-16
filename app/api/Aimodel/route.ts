@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { SelectTravelesList } from "@/app/create-new-trip/_data/groupSizeOptions";
+
 const MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
+
+const GROUP_SIZE_OPTIONS = SelectTravelesList.map((item) => item.title).join(", ");
 
 const PROMPT = `You are an AI Trip Planner Agent. Your goal is to help the user plan a trip by asking one relevant trip-related question at a time.
 
@@ -8,7 +12,7 @@ Only ask questions about the following details in order, and wait for the user's
 
 1. Starting location (source)
 2. Destination city or country
-3. Group size (Solo, Couple, Family, Friends)
+3. Group size (${GROUP_SIZE_OPTIONS})
 4. Budget (Low, Medium, High)
 5. Trip duration (number of days)
 6. Travel interests (e.g., adventure, sightseeing, cultural, food, nightlife, relaxation)

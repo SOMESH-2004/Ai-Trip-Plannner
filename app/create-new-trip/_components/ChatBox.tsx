@@ -6,10 +6,12 @@ import { Loader, Send } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import EmptyBox from './EmptyBox'
+import GroupSizeUi from './GroupSizeUi'
 
 type ChatMessage = {
   role: 'user' | 'assistant' | 'system'
-  content: string
+  content: string ,
+  ui?: string ,
 }
 
 function ChatBox() {
@@ -63,8 +65,10 @@ function ChatBox() {
           {
             role: 'assistant',
             content: data?.resp ?? '',
+            ui: data?.ui,
           },
         ])
+
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Unknown error'
         console.error('AI request failed:', err)
@@ -78,6 +82,21 @@ function ChatBox() {
       } finally {
         setIsSending(false)
       }
+    }
+    
+    const handleSelectOption = (value: string) => {
+      sendMessage(value)
+    }
+
+    const RenderGenerativeUi = (ui: string) => {
+      if (ui === 'budget') {
+        // Budget Ui components
+        return null
+      }
+      if (ui === 'groupSize') {
+        return <GroupSizeUi onSelectOption={(v) =>{setUserInput(v); onSend()}} />
+      }
+      return null
     }
 
     const onSend = async() => {
@@ -94,7 +113,7 @@ function ChatBox() {
   return (
     <div className='h-[93vh] flex flex-col p-5 justify-between '>
       {messages?.length === 0 && 
-      <EmptyBox onSelectOption ={(v:string) => {setUserInput(v) ;  onSend()}}/>}
+      <EmptyBox onSelectOption ={(v:string) => {sendMessage(v)}}/>}
       {/* display msg */}
       <section className='flex flex-col w-full gap-3 p-5 overflow-y-auto'>
         {messages.map((msg, idx) => (
@@ -109,7 +128,10 @@ function ChatBox() {
                   : 'max-w-lg bg-gray-100 text-black px-6 py-2 rounded-2xl'
               }
             >
-              <p className='text-sm whitespace-pre-wrap'>{msg.content}</p>
+              {msg.content && msg.content !== msg.ui && msg.ui !== 'groupSize' && (
+                <p className='text-sm whitespace-pre-wrap'>{msg.content}</p>
+              )}
+              {RenderGenerativeUi(msg.ui ?? '')}
             </div>
           </div>
         ))}
