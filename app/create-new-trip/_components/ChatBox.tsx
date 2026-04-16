@@ -6,20 +6,7 @@ import { Loader, Send } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import EmptyBox from './EmptyBox'
-import GroupSizeUi from './GroupSizeUi'error: remote origin already exists.
-Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 297 bytes | 297.00 KiB/s, done.
-Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
-remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-To https://github.com/SOMESH-2004/Ai-Trip-Plannner.git
-   7f41b8d..09e8a34  main -> main
-branch 'main' set up to track 'origin/main'.
-PS C:\Users\Somesh\Desktop\project\minorProject\tripplanner-1> 
-
-what is the problem
+import GroupSizeUi from './GroupSizeUi'
 
 type ChatMessage = {
   role: 'user' | 'assistant' | 'system'
